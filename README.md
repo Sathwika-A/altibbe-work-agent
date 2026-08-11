@@ -101,31 +101,43 @@ PORT=3000                        # optional override
 
 ## Test scenarios
 
-`npm test` runs all three required scenarios and writes full evidence (interpretation,
-plan, actions, activity trace) to `test/sample-outputs/scenario-{1,2,3}.json`.
+All three required scenarios were run twice: once via `npm test` against a mocked LLM
+(for offline/CI verification of the pipeline logic), and once live through the running
+app against the real Gemini API and the real `hedamo.com`. Results below are from the
+live run.
 
-- **Scenario 1 (routine business work)**: partner call notes → thank-you email drafted
-  and held for approval, internal brief generated automatically, 7-day reminder set
-  automatically.
-- **Scenario 2 (website review)**: `hedamo.com` → a real, bounded HTTP check (status
-  code, response time, title, meta description) plus a generated technical brief. The
-  system only reports checks it actually ran — see `checks_not_performed` in the tool
-  output for what it explicitly does *not* claim (SEO scoring, accessibility audit,
-  security scan, performance audit, broken-link crawl).
-- **Scenario 3 (ambiguous request)**: `"take care of the documentation and send it to
-  everyone before the meeting"` → all three action items route to `needs_clarification`
-  because the document, the recipient list, and the meeting are all unspecified — the
-  system flags what's missing instead of inventing a document, a distribution list, or
-  a date.
+- **Scenario 1 (routine business work)** — *"Notes from today's call with Sarah Chen at
+  Meridian Labs... thank her... propose next steps... follow up in a week if no
+  response."* Gemini correctly split this into a `human_review` action (the thank-you
+  email, held for approval — approved via the UI, which flipped the request from
+  `awaiting_approval` to `completed`) and an `execute_auto` action (a 7-day
+  `simulate_reminder`, which ran automatically). A first pass with only a company name
+  and no named contact routed every communication action to `needs_clarification`
+  instead of guessing a recipient — the planner is conservative by default, not just on
+  this one prompt.
+- **Scenario 2 (website review)** — `hedamo.com` → `run_website_check` returned a real
+  HTTP 200, response time, the actual page title, and the actual meta description
+  scraped live from the site. The plan also routed "review hedamo.com" (as a general,
+  unscoped request) to `needs_clarification`, since "review" wasn't given a defined
+  scope (performance? security? SEO?) — only the concrete, boundable check it can
+  actually perform ran automatically. The tool output includes an explicit
+  `checks_not_performed` list (SEO scoring, accessibility audit, security scan,
+  performance audit, broken-link crawl) so it never claims coverage it doesn't have.
+- **Scenario 3 (ambiguous request)** — `"take care of the documentation and send it to
+  everyone before the meeting"` → both action items routed to `needs_clarification`,
+  with `missing_information` explicitly naming the undefined document, the undefined
+  recipient list ("everyone"), and the undefined meeting — no document, name, or date
+  was invented.
 
-If `GEMINI_API_KEY` isn't set when `npm test` runs, the LLM layer is swapped for a
-mock with realistic, schema-shaped responses so the rest of the pipeline — routing,
-tool execution, SQLite persistence, approval gating, activity trace, failure
-handling — is still exercised for real. This was necessary because the sandbox used to
-build this had no outbound access to `generativelanguage.googleapis.com`; a normal
-deployment has full internet access and Scenario 2 hits the real `hedamo.com` (during
-development this returned a real HTTP 403, which the tool reported honestly rather than
-faking a 200).
+`npm test` runs all three scenarios non-interactively and writes full evidence
+(interpretation, plan, actions, activity trace) to
+`test/sample-outputs/scenario-{1,2,3}.json`. If `GEMINI_API_KEY` isn't set when it
+runs, the LLM layer is swapped for a mock with realistic, schema-shaped responses so
+the rest of the pipeline — routing, tool execution, SQLite persistence, approval
+gating, activity trace, failure handling — is still exercised for real. This exists
+because the sandbox used to originally build this had no outbound access to
+`generativelanguage.googleapis.com`; the live run above (with a real key, from a normal
+network) is the authoritative evidence.
 
 ## Design decisions
 
