@@ -20,27 +20,7 @@ explicit human approval gate before anything involving another person is conside
    interpretation, plan, per-action tool inputs/outputs, approval status, timestamps).
 6. **Activity trace** — a plain-English log of every step, visible in the UI without
    reading any code.
-
-## Architecture
-
-```mermaid
-flowchart TD
-    A[Intake: web UI / POST /api/requests] --> B[Interpretation<br/>Gemini structured JSON extraction]
-    B --> C[Planning<br/>Gemini routes each action item]
-    C --> D{Route}
-    D -->|execute_auto| E[Tool runs immediately]
-    D -->|human_review| F[Tool prepares draft<br/>held for approval]
-    D -->|cannot_execute| G[Logged, no tool available]
-    D -->|needs_clarification| H[Logged, missing info flagged]
-    F --> I[Human: Approve / Reject / Edit]
-    E --> J[(SQLite: requests, actions, activity_log)]
-    F --> J
-    G --> J
-    H --> J
-    I --> J
-    J --> K[Activity Trace + UI detail view]
-```
-
+   
 **Tools implemented** (`src/tools.js`):
 | Tool | What it does |
 |---|---|
