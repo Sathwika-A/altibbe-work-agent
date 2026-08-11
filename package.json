@@ -1,0 +1,22 @@
+{
+  "name": "unstructured-work-agent",
+  "version": "1.0.0",
+  "description": "Turns unstructured incoming work into a structured, reviewable, partially automated workflow using an LLM agent.",
+  "main": "src/server.js",
+  "type": "commonjs",
+  "scripts": {
+    "start": "node src/server.js",
+    "init-db": "node src/db.js",
+    "test": "node test/test-pipeline.js"
+  },
+  "dependencies": {
+    "better-sqlite3": "^11.3.0",
+    "cors": "^2.8.5",
+    "dotenv": "^16.4.5",
+    "express": "^4.19.2",
+    "uuid": "^9.0.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

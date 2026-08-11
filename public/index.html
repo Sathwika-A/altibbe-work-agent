@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Unstructured Work Agent</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<div class="app">
+  <header>
+    <h1>Unstructured Work Agent</h1>
+    <p class="subtitle">Intake &rarr; Interpretation &rarr; Planning &rarr; Tools &rarr; Approval &rarr; Persistence</p>
+  </header>
+
+  <main>
+    <section class="panel intake-panel">
+      <h2>1. Intake</h2>
+      <textarea id="intake-text" rows="8" placeholder="Paste an email, meeting notes, founder instruction, customer request, or bug report..."></textarea>
+      <button id="submit-btn">Submit &amp; Run Agent</button>
+      <div id="intake-status"></div>
+    </section>
+
+    <section class="panel list-panel">
+      <h2>Requests</h2>
+      <button id="refresh-btn" class="secondary">Refresh</button>
+      <ul id="request-list"></ul>
+    </section>
+
+    <section class="panel detail-panel" id="detail-panel">
+      <h2>Detail</h2>
+      <div id="detail-content"><p class="muted">Select a request to see its interpretation, plan, tool outputs, and activity trace.</p></div>
+    </section>
+  </main>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

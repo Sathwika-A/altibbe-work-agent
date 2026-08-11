@@ -1,0 +1,133 @@
+{
+  "scenario": "Scenario 2 -- Product / Website Work",
+  "input": "Please review hedamo.com and run whatever automated checks you can, and produce a short technical report.",
+  "request": {
+    "id": "358097b8-0fbf-4a9d-abe2-9bb9142e3bc5",
+    "original_text": "Please review hedamo.com and run whatever automated checks you can, and produce a short technical report.",
+    "structured_json": "{\"task_title\":\"Review hedamo.com\",\"summary\":\"Request to review the hedamo.com website and run available automated checks, producing a short technical report.\",\"action_items\":[{\"description\":\"Run automated checks against hedamo.com\",\"owner_hint\":\"unspecified\"}],\"priority\":\"medium\",\"detected_deadline\":\"\",\"missing_information\":[\"No specific criteria for \\\"review\\\" were given beyond automated checks\"],\"could_be_automated\":[\"Running a bounded HTTP/technical check against the site\"],\"requires_human_confirmation\":[\"Interpreting the check results into product/business judgments\"]}",
+    "plan_json": "[{\"action_description\":\"Run a bounded website check against hedamo.com\",\"route\":\"execute_auto\",\"reason\":\"A read-only HTTP check is low-risk and fully specified.\",\"tool_name\":\"run_website_check\",\"tool_input\":{\"url\":\"https://hedamo.com\"}},{\"action_description\":\"Generate a short technical report from the check results\",\"route\":\"execute_auto\",\"reason\":\"Summarizing already-collected, read-only data carries no external risk.\",\"tool_name\":\"generate_markdown_brief\",\"tool_input\":{}}]",
+    "status": "completed",
+    "created_at": "2026-08-11T05:59:01.652Z",
+    "updated_at": "2026-08-11T05:59:02.126Z"
+  },
+  "actions": [
+    {
+      "id": "6c57e140-9561-4d82-8ac5-5e8f4f9e8221",
+      "request_id": "358097b8-0fbf-4a9d-abe2-9bb9142e3bc5",
+      "seq": 1,
+      "description": "Run a bounded website check against hedamo.com",
+      "route": "execute_auto",
+      "reason": "A read-only HTTP check is low-risk and fully specified.",
+      "tool_name": "run_website_check",
+      "tool_input_json": "{\"url\":\"https://hedamo.com\"}",
+      "tool_output_json": "{\"url\":\"https://hedamo.com\",\"http_status\":403,\"response_time_ms\":467,\"page_title\":null,\"has_meta_description\":false,\"meta_description\":null,\"html_size_bytes\":97,\"checked_at\":\"2026-08-11T05:59:02.125Z\",\"checks_performed\":[\"http_status\",\"response_time\",\"title_tag\",\"meta_description_presence\",\"html_size\"],\"checks_not_performed\":[\"SEO scoring\",\"accessibility audit\",\"security scan\",\"performance/Lighthouse audit\",\"broken-link crawl\"]}",
+      "approval_status": "n/a",
+      "final_output_json": "{\"url\":\"https://hedamo.com\",\"http_status\":403,\"response_time_ms\":467,\"page_title\":null,\"has_meta_description\":false,\"meta_description\":null,\"html_size_bytes\":97,\"checked_at\":\"2026-08-11T05:59:02.125Z\",\"checks_performed\":[\"http_status\",\"response_time\",\"title_tag\",\"meta_description_presence\",\"html_size\"],\"checks_not_performed\":[\"SEO scoring\",\"accessibility audit\",\"security scan\",\"performance/Lighthouse audit\",\"broken-link crawl\"]}",
+      "error": null,
+      "created_at": "2026-08-11T05:59:01.655Z",
+      "updated_at": "2026-08-11T05:59:02.125Z"
+    },
+    {
+      "id": "16cc94c2-8419-458c-a754-a8b7b9d7cf19",
+      "request_id": "358097b8-0fbf-4a9d-abe2-9bb9142e3bc5",
+      "seq": 2,
+      "description": "Generate a short technical report from the check results",
+      "route": "execute_auto",
+      "reason": "Summarizing already-collected, read-only data carries no external risk.",
+      "tool_name": "generate_markdown_brief",
+      "tool_input_json": "{}",
+      "tool_output_json": "{\"file_path\":\"/home/claude/agent-app/data/briefs/358097b8-0fbf-4a9d-abe2-9bb9142e3bc5.md\",\"markdown\":\"# Review hedamo.com\\n\\n**Generated:** 2026-08-11T05:59:02.126Z\\n**Priority:** medium\\n**Deadline:** none detected\\n\\n## Summary\\nRequest to review the hedamo.com website and run available automated checks, producing a short technical report.\\n\\n## Action Items\\n1. Run automated checks against hedamo.com (owner: unspecified)\\n\\n## Missing Information\\n- No specific criteria for \\\"review\\\" were given beyond automated checks\\n\\n## Could Be Automated\\n- Running a bounded HTTP/technical check against the site\\n\"}",
+      "approval_status": "n/a",
+      "final_output_json": "{\"file_path\":\"/home/claude/agent-app/data/briefs/358097b8-0fbf-4a9d-abe2-9bb9142e3bc5.md\",\"markdown\":\"# Review hedamo.com\\n\\n**Generated:** 2026-08-11T05:59:02.126Z\\n**Priority:** medium\\n**Deadline:** none detected\\n\\n## Summary\\nRequest to review the hedamo.com website and run available automated checks, producing a short technical report.\\n\\n## Action Items\\n1. Run automated checks against hedamo.com (owner: unspecified)\\n\\n## Missing Information\\n- No specific criteria for \\\"review\\\" were given beyond automated checks\\n\\n## Could Be Automated\\n- Running a bounded HTTP/technical check against the site\\n\"}",
+      "error": null,
+      "created_at": "2026-08-11T05:59:02.125Z",
+      "updated_at": "2026-08-11T05:59:02.126Z"
+    }
+  ],
+  "trace": [
+    {
+      "id": 18,
+      "request_id": "358097b8-0fbf-4a9d-abe2-9bb9142e3bc5",
+      "actor": "system",
+      "message": "Request received via intake endpoint.",
+      "created_at": "2026-08-11T05:59:01.653Z"
+    },
+    {
+      "id": 19,
+      "request_id": "358097b8-0fbf-4a9d-abe2-9bb9142e3bc5",
+      "actor": "llm",
+      "message": "Calling gemini-2.5-flash (MOCKED for offline test) to extract structured interpretation...",
+      "created_at": "2026-08-11T05:59:01.653Z"
+    },
+    {
+      "id": 20,
+      "request_id": "358097b8-0fbf-4a9d-abe2-9bb9142e3bc5",
+      "actor": "llm",
+      "message": "Interpretation complete: \"Review hedamo.com\" (priority: medium).",
+      "created_at": "2026-08-11T05:59:01.654Z"
+    },
+    {
+      "id": 21,
+      "request_id": "358097b8-0fbf-4a9d-abe2-9bb9142e3bc5",
+      "actor": "llm",
+      "message": "Calling gemini-2.5-flash (MOCKED for offline test) to generate execution plan...",
+      "created_at": "2026-08-11T05:59:01.654Z"
+    },
+    {
+      "id": 22,
+      "request_id": "358097b8-0fbf-4a9d-abe2-9bb9142e3bc5",
+      "actor": "llm",
+      "message": "Plan generated with 2 action(s).",
+      "created_at": "2026-08-11T05:59:01.655Z"
+    },
+    {
+      "id": 23,
+      "request_id": "358097b8-0fbf-4a9d-abe2-9bb9142e3bc5",
+      "actor": "system",
+      "message": "Action 1 routed as \"execute_auto\": Run a bounded website check against hedamo.com -- A read-only HTTP check is low-risk and fully specified.",
+      "created_at": "2026-08-11T05:59:01.655Z"
+    },
+    {
+      "id": 24,
+      "request_id": "358097b8-0fbf-4a9d-abe2-9bb9142e3bc5",
+      "actor": "tool",
+      "message": "Executing tool \"run_website_check\" automatically for action 1.",
+      "created_at": "2026-08-11T05:59:01.655Z"
+    },
+    {
+      "id": 25,
+      "request_id": "358097b8-0fbf-4a9d-abe2-9bb9142e3bc5",
+      "actor": "tool",
+      "message": "Tool \"run_website_check\" succeeded for action 1.",
+      "created_at": "2026-08-11T05:59:02.125Z"
+    },
+    {
+      "id": 26,
+      "request_id": "358097b8-0fbf-4a9d-abe2-9bb9142e3bc5",
+      "actor": "system",
+      "message": "Action 2 routed as \"execute_auto\": Generate a short technical report from the check results -- Summarizing already-collected, read-only data carries no external risk.",
+      "created_at": "2026-08-11T05:59:02.125Z"
+    },
+    {
+      "id": 27,
+      "request_id": "358097b8-0fbf-4a9d-abe2-9bb9142e3bc5",
+      "actor": "tool",
+      "message": "Executing tool \"generate_markdown_brief\" automatically for action 2.",
+      "created_at": "2026-08-11T05:59:02.126Z"
+    },
+    {
+      "id": 28,
+      "request_id": "358097b8-0fbf-4a9d-abe2-9bb9142e3bc5",
+      "actor": "tool",
+      "message": "Tool \"generate_markdown_brief\" succeeded for action 2.",
+      "created_at": "2026-08-11T05:59:02.126Z"
+    },
+    {
+      "id": 29,
+      "request_id": "358097b8-0fbf-4a9d-abe2-9bb9142e3bc5",
+      "actor": "system",
+      "message": "Pipeline finished. Status: completed.",
+      "created_at": "2026-08-11T05:59:02.126Z"
+    }
+  ]
+}
