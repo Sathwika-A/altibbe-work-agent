@@ -5,6 +5,10 @@ customer request, a bug report — into a structured, reviewable, partially auto
 workflow, using an LLM for extraction and planning, real tools for execution, and an
 explicit human approval gate before anything involving another person is considered done.
 
+Live deployment: https://altibbe-work-agent.onrender.com
+
+Note on the free Gemini API tier used here: this project runs on Google's free Gemini API tier, which currently caps out at ~20 requests/day per model (each full pipeline run uses 2 requests — one for interpretation, one for planning). If the live deployment or a local test run returns an HTTP 429 "quota exceeded" error, that's an expected free-tier limit, not an application bug — the app handles it as an honest, visible failure (see Failure Handling) rather than pretending to succeed. The quota resets roughly every 24 hours (Google's daily reset is around midnight Pacific Time) — retrying after that window resolves it.
+
 ## What it does
 
 1. **Intake** — paste raw text into a small web UI (or POST it via `curl`).
