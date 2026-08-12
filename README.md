@@ -21,26 +21,6 @@ explicit human approval gate before anything involving another person is conside
 6. **Activity trace** — a plain-English log of every step, visible in the UI without
    reading any code.
 
-## Architecture
-
-```mermaid
-flowchart TD
-    A[Intake: web UI / POST /api/requests] --> B[Interpretation<br/>Gemini structured JSON extraction]
-    B --> C[Planning<br/>Gemini routes each action item]
-    C --> D{Route}
-    D -->|execute_auto| E[Tool runs immediately]
-    D -->|human_review| F[Tool prepares draft<br/>held for approval]
-    D -->|cannot_execute| G[Logged, no tool available]
-    D -->|needs_clarification| H[Logged, missing info flagged]
-    F --> I[Human: Approve / Reject / Edit]
-    E --> J[(SQLite: requests, actions, activity_log)]
-    F --> J
-    G --> J
-    H --> J
-    I --> J
-    J --> K[Activity Trace + UI detail view]
-```
-
 **Tools implemented** (`src/tools.js`):
 | Tool | What it does |
 |---|---|
@@ -58,31 +38,6 @@ flowchart TD
 State passed between steps is minimal and explicit: `rawText → interpretation (JSON) →
 plan (JSON array) → per-action tool results`, all persisted to SQLite after each step so
 a crash mid-pipeline leaves an inspectable, honest record rather than silent loss.
-
-## Changelog
-
-- **Fixed: hardcoded model name (`gemini-2.5-flash`) returning HTTP 404.**
-  Google deprecated `gemini-2.5-flash` for new API users during development.
-  Switched the default to `gemini-flash-latest`, a Google-maintained alias
-  that always points at their current stable Flash model, so the app
-  survives Google's frequent model-naming churn without needing a code
-  change every time a specific model ID is retired. `GEMINI_MODEL` in `.env`
-  can still override this to pin an exact model if ever needed.
-- **Fixed: incorrect final status when all actions are blocked.** A reviewer
-  correctly flagged that Scenario 3 (all three actions routed to
-  `needs_clarification`) was still saving the parent request as `completed`.
-  Root cause: the final-status logic only checked whether any `human_review`
-  action was still pending — it never accounted for `needs_clarification`,
-  `cannot_execute`, or failed tool calls at all. Fixed by introducing a single
-  `computeFinalStatus()` function (`src/pipeline.js`) used by both the initial
-  pipeline run and the approval-resolution path, which now distinguishes:
-  `completed` (nothing blocked), `completed_with_gaps` (some actions blocked,
-  but at least one genuinely executed/was approved), and
-  `blocked_needs_clarification` (every action is blocked — nothing executed
-  or approved at all). Covered by an automated assertion in
-  `test/test-pipeline.js` (`assertFinalStatusCorrectness`) that fails loudly
-  if this regresses — verified by deliberately reintroducing the bug and
-  confirming the assertion catches it before restoring the fix.
 
 ## Setup
 
@@ -199,19 +154,6 @@ network) is the authoritative evidence.
   tool calls would need to move to a background job queue.
 - Gemini's free tier has modest per-minute/per-day rate limits — fine for this prototype,
   not for production volume.
-
-## What I'd build next
-
-1. Background job queue (e.g. BullMQ) so intake returns immediately and long tool runs
-   don't block the HTTP request.
-2. Real integrations behind the same tool interface (e.g. actually send via a sandboxed
-   email provider once a human approves, actually create a calendar event) — the
-   approval gate is already there, ready for a "real" send/create action.
-3. Multi-user auth so `human_review` items can be assigned and approved by different
-   people than the submitter.
-4. Streaming the activity trace over WebSockets instead of polling on selection.
-5. A richer website-check tool (basic accessibility and broken-link checks) while still
-   being explicit about what it does and doesn't cover.
 
 ## How I used AI
 
