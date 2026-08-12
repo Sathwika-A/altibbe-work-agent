@@ -43,7 +43,7 @@ async function refreshList() {
     li.innerHTML = `
       <div class="title-row">
         <strong>${escapeHtml(item.title)}</strong>
-        <span class="badge ${item.status}">${item.status.replace('_', ' ')}</span>
+        <span class="badge ${item.status}">${item.status.replace(/_/g, ' ')}</span>
       </div>
       <div class="muted" style="font-size:12px;margin-top:4px;">${escapeHtml(item.preview)}...</div>
       <div class="muted" style="font-size:11px;margin-top:4px;">${new Date(item.created_at).toLocaleString()}</div>
@@ -66,7 +66,7 @@ function renderDetail(data) {
   const interp = data.interpretation;
 
   let html = `<div class="title-row"><h3 style="margin:0">${escapeHtml(interp?.task_title || '(no title)')}</h3>
-    <span class="badge ${data.status}">${data.status.replace('_', ' ')}</span></div>`;
+    <span class="badge ${data.status}">${data.status.replace(/_/g, ' ')}</span></div>`;
 
   if (interp) {
     html += `<p>${escapeHtml(interp.summary)}</p>

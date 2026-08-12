@@ -2,148 +2,50 @@
   "scenario": "Scenario 3 -- Ambiguous Request",
   "input": "Please take care of the documentation and send it to everyone before the meeting.",
   "request": {
-    "id": "f7d2ff1e-7cca-4dc1-9bbe-142c93ca20da",
+    "id": "219105ac-f93f-416a-9cb8-1e15c073b74f",
     "original_text": "Please take care of the documentation and send it to everyone before the meeting.",
-    "structured_json": "{\"task_title\":\"Send documentation to team before meeting\",\"summary\":\"A request to prepare documentation and distribute it to \\\"everyone\\\" before an unspecified meeting.\",\"action_items\":[{\"description\":\"Identify which documentation is being referred to\",\"owner_hint\":\"unspecified\"},{\"description\":\"Identify who \\\"everyone\\\" refers to\",\"owner_hint\":\"unspecified\"},{\"description\":\"Send the documentation before the meeting\",\"owner_hint\":\"unspecified\"}],\"priority\":\"high\",\"detected_deadline\":\"Before \\\"the meeting\\\" -- no date/time given\",\"missing_information\":[\"Which specific document(s) \\\"the documentation\\\" refers to\",\"Who \\\"everyone\\\" includes (no recipient list or distribution group given)\",\"The date, time, and identity of \\\"the meeting\\\"\"],\"could_be_automated\":[\"Drafting a distribution email once the document and recipient list are known\"],\"requires_human_confirmation\":[\"Which document to send\",\"Final recipient list\",\"Meeting date/time\"]}",
-    "plan_json": "[{\"action_description\":\"Determine which document \\\"the documentation\\\" refers to\",\"route\":\"needs_clarification\",\"reason\":\"No document name, link, or description was provided in the request; guessing would risk sending the wrong file.\",\"tool_name\":\"none\",\"tool_input\":{}},{\"action_description\":\"Determine the recipient list for \\\"everyone\\\"\",\"route\":\"needs_clarification\",\"reason\":\"No recipient list, team name, or distribution group was specified.\",\"tool_name\":\"none\",\"tool_input\":{}},{\"action_description\":\"Determine the meeting date/time referenced by \\\"the meeting\\\"\",\"route\":\"needs_clarification\",\"reason\":\"No meeting was named or dated in the request, so a deadline cannot be established.\",\"tool_name\":\"none\",\"tool_input\":{}}]",
-    "status": "completed",
-    "created_at": "2026-08-11T05:59:02.127Z",
-    "updated_at": "2026-08-11T05:59:02.128Z"
+    "structured_json": "{\"task_title\":\"Prepare and Distribute Documentation\",\"summary\":\"The user requests that documentation be prepared and sent to all relevant parties before an upcoming meeting.\",\"action_items\":[{\"description\":\"Take care of the documentation\",\"owner_hint\":\"unspecified\"},{\"description\":\"Send the documentation to everyone\",\"owner_hint\":\"unspecified\"}],\"priority\":\"high\",\"detected_deadline\":\"before the meeting\",\"missing_information\":[\"What specific documentation needs to be taken care of?\",\"Who are the recipients for the documentation?\",\"When is the meeting scheduled?\"],\"could_be_automated\":[\"Automate sending the documentation to a predefined list of recipients once the document is finalized.\"],\"requires_human_confirmation\":[\"Confirm the specific documentation to be prepared and sent.\",\"Confirm the list of recipients.\",\"Confirm the date and time of the meeting.\"]}",
+    "plan_json": null,
+    "status": "failed",
+    "created_at": "2026-08-11T16:04:19.599Z",
+    "updated_at": "2026-08-11T16:04:23.317Z"
   },
-  "actions": [
-    {
-      "id": "e7ce0745-f7ba-4738-8804-4ddbe831bd31",
-      "request_id": "f7d2ff1e-7cca-4dc1-9bbe-142c93ca20da",
-      "seq": 1,
-      "description": "Determine which document \"the documentation\" refers to",
-      "route": "needs_clarification",
-      "reason": "No document name, link, or description was provided in the request; guessing would risk sending the wrong file.",
-      "tool_name": "none",
-      "tool_input_json": "{}",
-      "tool_output_json": null,
-      "approval_status": "n/a",
-      "final_output_json": null,
-      "error": null,
-      "created_at": "2026-08-11T05:59:02.128Z",
-      "updated_at": "2026-08-11T05:59:02.128Z"
-    },
-    {
-      "id": "3d3ce3f6-de55-486b-a363-893bf0a676a9",
-      "request_id": "f7d2ff1e-7cca-4dc1-9bbe-142c93ca20da",
-      "seq": 2,
-      "description": "Determine the recipient list for \"everyone\"",
-      "route": "needs_clarification",
-      "reason": "No recipient list, team name, or distribution group was specified.",
-      "tool_name": "none",
-      "tool_input_json": "{}",
-      "tool_output_json": null,
-      "approval_status": "n/a",
-      "final_output_json": null,
-      "error": null,
-      "created_at": "2026-08-11T05:59:02.128Z",
-      "updated_at": "2026-08-11T05:59:02.128Z"
-    },
-    {
-      "id": "e4f2abb9-11d5-448d-978b-bb2e8e9668fe",
-      "request_id": "f7d2ff1e-7cca-4dc1-9bbe-142c93ca20da",
-      "seq": 3,
-      "description": "Determine the meeting date/time referenced by \"the meeting\"",
-      "route": "needs_clarification",
-      "reason": "No meeting was named or dated in the request, so a deadline cannot be established.",
-      "tool_name": "none",
-      "tool_input_json": "{}",
-      "tool_output_json": null,
-      "approval_status": "n/a",
-      "final_output_json": null,
-      "error": null,
-      "created_at": "2026-08-11T05:59:02.128Z",
-      "updated_at": "2026-08-11T05:59:02.128Z"
-    }
-  ],
+  "actions": [],
   "trace": [
     {
-      "id": 30,
-      "request_id": "f7d2ff1e-7cca-4dc1-9bbe-142c93ca20da",
+      "id": 89,
+      "request_id": "219105ac-f93f-416a-9cb8-1e15c073b74f",
       "actor": "system",
       "message": "Request received via intake endpoint.",
-      "created_at": "2026-08-11T05:59:02.127Z"
+      "created_at": "2026-08-11T16:04:19.599Z"
     },
     {
-      "id": 31,
-      "request_id": "f7d2ff1e-7cca-4dc1-9bbe-142c93ca20da",
+      "id": 90,
+      "request_id": "219105ac-f93f-416a-9cb8-1e15c073b74f",
       "actor": "llm",
-      "message": "Calling gemini-2.5-flash (MOCKED for offline test) to extract structured interpretation...",
-      "created_at": "2026-08-11T05:59:02.127Z"
+      "message": "Calling gemini-2.5-flash to extract structured interpretation...",
+      "created_at": "2026-08-11T16:04:19.599Z"
     },
     {
-      "id": 32,
-      "request_id": "f7d2ff1e-7cca-4dc1-9bbe-142c93ca20da",
+      "id": 91,
+      "request_id": "219105ac-f93f-416a-9cb8-1e15c073b74f",
       "actor": "llm",
-      "message": "Interpretation complete: \"Send documentation to team before meeting\" (priority: high).",
-      "created_at": "2026-08-11T05:59:02.128Z"
+      "message": "Interpretation complete: \"Prepare and Distribute Documentation\" (priority: high).",
+      "created_at": "2026-08-11T16:04:23.087Z"
     },
     {
-      "id": 33,
-      "request_id": "f7d2ff1e-7cca-4dc1-9bbe-142c93ca20da",
+      "id": 92,
+      "request_id": "219105ac-f93f-416a-9cb8-1e15c073b74f",
       "actor": "llm",
-      "message": "Calling gemini-2.5-flash (MOCKED for offline test) to generate execution plan...",
-      "created_at": "2026-08-11T05:59:02.128Z"
+      "message": "Calling gemini-2.5-flash to generate execution plan...",
+      "created_at": "2026-08-11T16:04:23.088Z"
     },
     {
-      "id": 34,
-      "request_id": "f7d2ff1e-7cca-4dc1-9bbe-142c93ca20da",
-      "actor": "llm",
-      "message": "Plan generated with 3 action(s).",
-      "created_at": "2026-08-11T05:59:02.128Z"
-    },
-    {
-      "id": 35,
-      "request_id": "f7d2ff1e-7cca-4dc1-9bbe-142c93ca20da",
+      "id": 93,
+      "request_id": "219105ac-f93f-416a-9cb8-1e15c073b74f",
       "actor": "system",
-      "message": "Action 1 routed as \"needs_clarification\": Determine which document \"the documentation\" refers to -- No document name, link, or description was provided in the request; guessing would risk sending the wrong file.",
-      "created_at": "2026-08-11T05:59:02.128Z"
-    },
-    {
-      "id": 36,
-      "request_id": "f7d2ff1e-7cca-4dc1-9bbe-142c93ca20da",
-      "actor": "system",
-      "message": "Action 1 needs clarification before it can proceed: No document name, link, or description was provided in the request; guessing would risk sending the wrong file.",
-      "created_at": "2026-08-11T05:59:02.128Z"
-    },
-    {
-      "id": 37,
-      "request_id": "f7d2ff1e-7cca-4dc1-9bbe-142c93ca20da",
-      "actor": "system",
-      "message": "Action 2 routed as \"needs_clarification\": Determine the recipient list for \"everyone\" -- No recipient list, team name, or distribution group was specified.",
-      "created_at": "2026-08-11T05:59:02.128Z"
-    },
-    {
-      "id": 38,
-      "request_id": "f7d2ff1e-7cca-4dc1-9bbe-142c93ca20da",
-      "actor": "system",
-      "message": "Action 2 needs clarification before it can proceed: No recipient list, team name, or distribution group was specified.",
-      "created_at": "2026-08-11T05:59:02.128Z"
-    },
-    {
-      "id": 39,
-      "request_id": "f7d2ff1e-7cca-4dc1-9bbe-142c93ca20da",
-      "actor": "system",
-      "message": "Action 3 routed as \"needs_clarification\": Determine the meeting date/time referenced by \"the meeting\" -- No meeting was named or dated in the request, so a deadline cannot be established.",
-      "created_at": "2026-08-11T05:59:02.128Z"
-    },
-    {
-      "id": 40,
-      "request_id": "f7d2ff1e-7cca-4dc1-9bbe-142c93ca20da",
-      "actor": "system",
-      "message": "Action 3 needs clarification before it can proceed: No meeting was named or dated in the request, so a deadline cannot be established.",
-      "created_at": "2026-08-11T05:59:02.128Z"
-    },
-    {
-      "id": 41,
-      "request_id": "f7d2ff1e-7cca-4dc1-9bbe-142c93ca20da",
-      "actor": "system",
-      "message": "Pipeline finished. Status: completed.",
-      "created_at": "2026-08-11T05:59:02.128Z"
+      "message": "FAILED at planning step: Gemini API returned HTTP 429: {\"error\":{\"code\":429,\"message\":\"You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \\n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\\nPlease retry in 36.884392838s.\",\"status\":\"RESOURCE_EXHAUSTED\",\"details\":[{\"@type\":\"type.googleapis.com/google.rpc.Help\",\"links\":[{\"description\":\"Learn more about Gemini API quotas\",\"url\":\"https://ai.google.dev/gemini-api/docs/rate-limits\"}]},{\"@type\":\"type.googleapis.com/google.rpc.QuotaFailure\",\"violations\":[{\"quotaMetric\":\"generativelanguage.googleapis.com/generate_content_free_tier_requests\",\"quotaId\":\"GenerateRequestsPerDayPerProjectPerModel-FreeTier\",\"quotaDimensions\":{\"location\":\"global\",\"model\":\"gemini-2.5-flash\"},\"quotaValue\":\"20\"}]},{\"@type\":\"type.googleapis.com/google.rpc.RetryInfo\",\"retryDelay\":\"36s\"}]}}",
+      "created_at": "2026-08-11T16:04:23.318Z"
     }
   ]
 }

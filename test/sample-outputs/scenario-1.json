@@ -2,169 +2,185 @@
   "scenario": "Scenario 1 -- Routine Business Work",
   "input": "Notes from today's call with Meridian Labs: We discussed their interest in our\nGrowth tier pricing and a possible 4-week pilot. They asked for a one-pager on the pilot\nscope. Need to thank them for their time and propose next steps. Should follow up if we\ndon't hear back within a week.",
   "request": {
-    "id": "3e0f1c81-90b6-48fe-8cdd-952db35d36e9",
+    "id": "688a9092-1dc4-4f20-b8a4-c84c120f9316",
     "original_text": "Notes from today's call with Meridian Labs: We discussed their interest in our\nGrowth tier pricing and a possible 4-week pilot. They asked for a one-pager on the pilot\nscope. Need to thank them for their time and propose next steps. Should follow up if we\ndon't hear back within a week.",
-    "structured_json": "{\"task_title\":\"Follow up on partner discussion with Meridian Labs\",\"summary\":\"Internal notes describing a partnership call with Meridian Labs covering pricing tiers and a pilot proposal, with follow-up items for both sides.\",\"action_items\":[{\"description\":\"Send a thank-you email to Meridian Labs summarizing the call\",\"owner_hint\":\"unspecified\"},{\"description\":\"Draft a one-page pilot proposal\",\"owner_hint\":\"unspecified\"},{\"description\":\"Set a reminder to follow up in 7 days if no response\",\"owner_hint\":\"unspecified\"}],\"priority\":\"medium\",\"detected_deadline\":\"7 days from today (follow-up reminder)\",\"missing_information\":[\"Exact recipient email address at Meridian Labs was not given, only the company name\"],\"could_be_automated\":[\"Drafting the thank-you email\",\"Setting the 7-day follow-up reminder\"],\"requires_human_confirmation\":[\"Recipient email address and final approval before the email is actually sent\"]}",
-    "plan_json": "[{\"action_description\":\"Draft a thank-you email to Meridian Labs summarizing the call and next steps\",\"route\":\"human_review\",\"reason\":\"Communication addressed to an external partner must be approved by a human before it is considered sent.\",\"tool_name\":\"draft_communication\",\"tool_input\":{\"recipient\":\"Meridian Labs\",\"subject_or_topic\":\"partnership discussion follow-up\",\"note\":\"Summarize pricing tiers and pilot proposal discussion.\"}},{\"action_description\":\"Generate a markdown brief of the discussion for internal records\",\"route\":\"execute_auto\",\"reason\":\"Internal-only document generation carries no external risk and needs no approval.\",\"tool_name\":\"generate_markdown_brief\",\"tool_input\":{}},{\"action_description\":\"Set a reminder to follow up in 7 days if no response is received\",\"route\":\"execute_auto\",\"reason\":\"A simulated internal reminder is low-risk and fully specified (7 days).\",\"tool_name\":\"simulate_reminder\",\"tool_input\":{\"days_from_now\":7,\"note\":\"Follow up with Meridian Labs if no response to the thank-you email.\"}}]",
-    "status": "awaiting_approval",
-    "created_at": "2026-08-11T05:59:01.643Z",
-    "updated_at": "2026-08-11T05:59:01.649Z"
+    "structured_json": "{\"task_title\":\"Follow up with Meridian Labs on Growth tier and pilot\",\"summary\":\"Meridian Labs is interested in our Growth tier pricing and a possible 4-week pilot. They requested a one-pager on the pilot scope. We need to thank them for their time, propose next steps, and follow up if no response within a week.\",\"action_items\":[{\"description\":\"Create a one-pager on the pilot scope\",\"owner_hint\":\"unspecified\"},{\"description\":\"Thank Meridian Labs for their time\",\"owner_hint\":\"unspecified\"},{\"description\":\"Propose next steps to Meridian Labs\",\"owner_hint\":\"unspecified\"},{\"description\":\"Follow up with Meridian Labs if no response within a week\",\"owner_hint\":\"unspecified\"}],\"priority\":\"high\",\"detected_deadline\":\"within a week\",\"missing_information\":[\"Who is responsible for creating the one-pager?\",\"Who is responsible for sending the thank you and proposing next steps?\",\"Who is responsible for the follow-up?\",\"What are the specific next steps to propose?\",\"To whom specifically at Meridian Labs should the communication be sent?\"],\"could_be_automated\":[\"Sending a follow-up reminder if no response within a week\"],\"requires_human_confirmation\":[\"Content of the one-pager on pilot scope\",\"Specific next steps to propose\"]}",
+    "plan_json": "[{\"action_description\":\"Create a one-pager on the pilot scope\",\"route\":\"needs_clarification\",\"reason\":\"The specific content for the pilot scope is missing, and it's unclear who is responsible for creating it. The tool cannot generate content without input.\",\"tool_name\":\"none\"},{\"action_description\":\"Thank Meridian Labs for their time\",\"route\":\"needs_clarification\",\"reason\":\"The specific recipient at Meridian Labs is missing, which is required to draft communication.\",\"tool_name\":\"none\"},{\"action_description\":\"Propose next steps to Meridian Labs\",\"route\":\"needs_clarification\",\"reason\":\"The specific next steps to propose are missing, and the recipient at Meridian Labs is also missing.\",\"tool_name\":\"none\"},{\"action_description\":\"Follow up with Meridian Labs if no response within a week\",\"route\":\"execute_auto\",\"reason\":\"A simulated reminder can be scheduled automatically for 7 days from now to prompt a follow-up action, as explicitly identified in 'could_be_automated'.\",\"tool_name\":\"simulate_reminder\",\"tool_input\":{\"days_from_now\":7,\"note\":\"Follow up with Meridian Labs regarding Growth tier and pilot if no response.\"}}]",
+    "status": "completed_with_gaps",
+    "created_at": "2026-08-11T16:03:52.118Z",
+    "updated_at": "2026-08-11T16:04:05.123Z"
   },
   "actions": [
     {
-      "id": "0e3745f9-1cbc-48ec-a478-d9a1ca2011c0",
-      "request_id": "3e0f1c81-90b6-48fe-8cdd-952db35d36e9",
+      "id": "1ec91017-f72a-428b-8d25-7a0441a85e32",
+      "request_id": "688a9092-1dc4-4f20-b8a4-c84c120f9316",
       "seq": 1,
-      "description": "Draft a thank-you email to Meridian Labs summarizing the call and next steps",
-      "route": "human_review",
-      "reason": "Communication addressed to an external partner must be approved by a human before it is considered sent.",
-      "tool_name": "draft_communication",
-      "tool_input_json": "{\"recipient\":\"Meridian Labs\",\"subject_or_topic\":\"partnership discussion follow-up\",\"note\":\"Summarize pricing tiers and pilot proposal discussion.\"}",
-      "tool_output_json": "{\"to\":\"Meridian Labs\",\"subject\":\"Re: partnership discussion follow-up\",\"body\":\"Hi Meridian Labs,\\n\\nThank you for taking the time to discuss partnership discussion follow-up. Summarize pricing tiers and pilot proposal discussion.\\n\\nI'll follow up with next steps shortly. Please let me know if I've missed anything.\\n\\nBest regards\",\"drafted_at\":\"2026-08-11T05:59:01.647Z\",\"note\":\"DRAFT ONLY -- not sent. Requires human approval before use.\"}",
-      "approval_status": "pending",
+      "description": "Create a one-pager on the pilot scope",
+      "route": "needs_clarification",
+      "reason": "The specific content for the pilot scope is missing, and it's unclear who is responsible for creating it. The tool cannot generate content without input.",
+      "tool_name": "none",
+      "tool_input_json": "{}",
+      "tool_output_json": null,
+      "approval_status": "n/a",
       "final_output_json": null,
       "error": null,
-      "created_at": "2026-08-11T05:59:01.646Z",
-      "updated_at": "2026-08-11T05:59:01.647Z"
+      "created_at": "2026-08-11T16:04:05.120Z",
+      "updated_at": "2026-08-11T16:04:05.120Z"
     },
     {
-      "id": "2ee3c2ab-5b29-4d42-8649-e4d11cf79aac",
-      "request_id": "3e0f1c81-90b6-48fe-8cdd-952db35d36e9",
+      "id": "7fa6718d-87e0-4c85-8542-497d90a8c39e",
+      "request_id": "688a9092-1dc4-4f20-b8a4-c84c120f9316",
       "seq": 2,
-      "description": "Generate a markdown brief of the discussion for internal records",
-      "route": "execute_auto",
-      "reason": "Internal-only document generation carries no external risk and needs no approval.",
-      "tool_name": "generate_markdown_brief",
+      "description": "Thank Meridian Labs for their time",
+      "route": "needs_clarification",
+      "reason": "The specific recipient at Meridian Labs is missing, which is required to draft communication.",
+      "tool_name": "none",
       "tool_input_json": "{}",
-      "tool_output_json": "{\"file_path\":\"/home/claude/agent-app/data/briefs/3e0f1c81-90b6-48fe-8cdd-952db35d36e9.md\",\"markdown\":\"# Follow up on partner discussion with Meridian Labs\\n\\n**Generated:** 2026-08-11T05:59:01.648Z\\n**Priority:** medium\\n**Deadline:** 7 days from today (follow-up reminder)\\n\\n## Summary\\nInternal notes describing a partnership call with Meridian Labs covering pricing tiers and a pilot proposal, with follow-up items for both sides.\\n\\n## Action Items\\n1. Send a thank-you email to Meridian Labs summarizing the call (owner: unspecified)\\n2. Draft a one-page pilot proposal (owner: unspecified)\\n3. Set a reminder to follow up in 7 days if no response (owner: unspecified)\\n\\n## Missing Information\\n- Exact recipient email address at Meridian Labs was not given, only the company name\\n\\n## Could Be Automated\\n- Drafting the thank-you email\\n- Setting the 7-day follow-up reminder\\n\"}",
+      "tool_output_json": null,
       "approval_status": "n/a",
-      "final_output_json": "{\"file_path\":\"/home/claude/agent-app/data/briefs/3e0f1c81-90b6-48fe-8cdd-952db35d36e9.md\",\"markdown\":\"# Follow up on partner discussion with Meridian Labs\\n\\n**Generated:** 2026-08-11T05:59:01.648Z\\n**Priority:** medium\\n**Deadline:** 7 days from today (follow-up reminder)\\n\\n## Summary\\nInternal notes describing a partnership call with Meridian Labs covering pricing tiers and a pilot proposal, with follow-up items for both sides.\\n\\n## Action Items\\n1. Send a thank-you email to Meridian Labs summarizing the call (owner: unspecified)\\n2. Draft a one-page pilot proposal (owner: unspecified)\\n3. Set a reminder to follow up in 7 days if no response (owner: unspecified)\\n\\n## Missing Information\\n- Exact recipient email address at Meridian Labs was not given, only the company name\\n\\n## Could Be Automated\\n- Drafting the thank-you email\\n- Setting the 7-day follow-up reminder\\n\"}",
+      "final_output_json": null,
       "error": null,
-      "created_at": "2026-08-11T05:59:01.647Z",
-      "updated_at": "2026-08-11T05:59:01.648Z"
+      "created_at": "2026-08-11T16:04:05.121Z",
+      "updated_at": "2026-08-11T16:04:05.121Z"
     },
     {
-      "id": "66ab615c-b53e-4bb1-94f5-2c1dfbeeb570",
-      "request_id": "3e0f1c81-90b6-48fe-8cdd-952db35d36e9",
+      "id": "d3842ffc-6f80-498b-9531-635399b330dc",
+      "request_id": "688a9092-1dc4-4f20-b8a4-c84c120f9316",
       "seq": 3,
-      "description": "Set a reminder to follow up in 7 days if no response is received",
-      "route": "execute_auto",
-      "reason": "A simulated internal reminder is low-risk and fully specified (7 days).",
-      "tool_name": "simulate_reminder",
-      "tool_input_json": "{\"days_from_now\":7,\"note\":\"Follow up with Meridian Labs if no response to the thank-you email.\"}",
-      "tool_output_json": "{\"reminder_id\":\"rem_1786427941649_ag80gh\",\"due_at\":\"2026-08-18T05:59:01.648Z\",\"note\":\"Follow up with Meridian Labs if no response to the thank-you email.\",\"simulated\":true}",
+      "description": "Propose next steps to Meridian Labs",
+      "route": "needs_clarification",
+      "reason": "The specific next steps to propose are missing, and the recipient at Meridian Labs is also missing.",
+      "tool_name": "none",
+      "tool_input_json": "{}",
+      "tool_output_json": null,
       "approval_status": "n/a",
-      "final_output_json": "{\"reminder_id\":\"rem_1786427941649_ag80gh\",\"due_at\":\"2026-08-18T05:59:01.648Z\",\"note\":\"Follow up with Meridian Labs if no response to the thank-you email.\",\"simulated\":true}",
+      "final_output_json": null,
       "error": null,
-      "created_at": "2026-08-11T05:59:01.648Z",
-      "updated_at": "2026-08-11T05:59:01.649Z"
+      "created_at": "2026-08-11T16:04:05.121Z",
+      "updated_at": "2026-08-11T16:04:05.121Z"
+    },
+    {
+      "id": "22bba6ff-05eb-43e4-9fbe-e67eecaf1baa",
+      "request_id": "688a9092-1dc4-4f20-b8a4-c84c120f9316",
+      "seq": 4,
+      "description": "Follow up with Meridian Labs if no response within a week",
+      "route": "execute_auto",
+      "reason": "A simulated reminder can be scheduled automatically for 7 days from now to prompt a follow-up action, as explicitly identified in 'could_be_automated'.",
+      "tool_name": "simulate_reminder",
+      "tool_input_json": "{\"days_from_now\":7,\"note\":\"Follow up with Meridian Labs regarding Growth tier and pilot if no response.\"}",
+      "tool_output_json": "{\"reminder_id\":\"rem_1786464245122_6nrz4n\",\"due_at\":\"2026-08-18T16:04:05.122Z\",\"note\":\"Follow up with Meridian Labs regarding Growth tier and pilot if no response.\",\"simulated\":true}",
+      "approval_status": "n/a",
+      "final_output_json": "{\"reminder_id\":\"rem_1786464245122_6nrz4n\",\"due_at\":\"2026-08-18T16:04:05.122Z\",\"note\":\"Follow up with Meridian Labs regarding Growth tier and pilot if no response.\",\"simulated\":true}",
+      "error": null,
+      "created_at": "2026-08-11T16:04:05.121Z",
+      "updated_at": "2026-08-11T16:04:05.122Z"
     }
   ],
   "trace": [
     {
-      "id": 1,
-      "request_id": "3e0f1c81-90b6-48fe-8cdd-952db35d36e9",
+      "id": 60,
+      "request_id": "688a9092-1dc4-4f20-b8a4-c84c120f9316",
       "actor": "system",
       "message": "Request received via intake endpoint.",
-      "created_at": "2026-08-11T05:59:01.645Z"
+      "created_at": "2026-08-11T16:03:52.119Z"
     },
     {
-      "id": 2,
-      "request_id": "3e0f1c81-90b6-48fe-8cdd-952db35d36e9",
+      "id": 61,
+      "request_id": "688a9092-1dc4-4f20-b8a4-c84c120f9316",
       "actor": "llm",
-      "message": "Calling gemini-2.5-flash (MOCKED for offline test) to extract structured interpretation...",
-      "created_at": "2026-08-11T05:59:01.645Z"
+      "message": "Calling gemini-2.5-flash to extract structured interpretation...",
+      "created_at": "2026-08-11T16:03:52.119Z"
     },
     {
-      "id": 3,
-      "request_id": "3e0f1c81-90b6-48fe-8cdd-952db35d36e9",
+      "id": 62,
+      "request_id": "688a9092-1dc4-4f20-b8a4-c84c120f9316",
       "actor": "llm",
-      "message": "Interpretation complete: \"Follow up on partner discussion with Meridian Labs\" (priority: medium).",
-      "created_at": "2026-08-11T05:59:01.646Z"
+      "message": "Interpretation complete: \"Follow up with Meridian Labs on Growth tier and pilot\" (priority: high).",
+      "created_at": "2026-08-11T16:03:56.114Z"
     },
     {
-      "id": 4,
-      "request_id": "3e0f1c81-90b6-48fe-8cdd-952db35d36e9",
+      "id": 63,
+      "request_id": "688a9092-1dc4-4f20-b8a4-c84c120f9316",
       "actor": "llm",
-      "message": "Calling gemini-2.5-flash (MOCKED for offline test) to generate execution plan...",
-      "created_at": "2026-08-11T05:59:01.646Z"
+      "message": "Calling gemini-2.5-flash to generate execution plan...",
+      "created_at": "2026-08-11T16:03:56.114Z"
     },
     {
-      "id": 5,
-      "request_id": "3e0f1c81-90b6-48fe-8cdd-952db35d36e9",
+      "id": 64,
+      "request_id": "688a9092-1dc4-4f20-b8a4-c84c120f9316",
       "actor": "llm",
-      "message": "Plan generated with 3 action(s).",
-      "created_at": "2026-08-11T05:59:01.646Z"
+      "message": "Plan generated with 4 action(s).",
+      "created_at": "2026-08-11T16:04:05.120Z"
     },
     {
-      "id": 6,
-      "request_id": "3e0f1c81-90b6-48fe-8cdd-952db35d36e9",
+      "id": 65,
+      "request_id": "688a9092-1dc4-4f20-b8a4-c84c120f9316",
       "actor": "system",
-      "message": "Action 1 routed as \"human_review\": Draft a thank-you email to Meridian Labs summarizing the call and next steps -- Communication addressed to an external partner must be approved by a human before it is considered sent.",
-      "created_at": "2026-08-11T05:59:01.646Z"
+      "message": "Action 1 routed as \"needs_clarification\": Create a one-pager on the pilot scope -- The specific content for the pilot scope is missing, and it's unclear who is responsible for creating it. The tool cannot generate content without input.",
+      "created_at": "2026-08-11T16:04:05.121Z"
     },
     {
-      "id": 7,
-      "request_id": "3e0f1c81-90b6-48fe-8cdd-952db35d36e9",
-      "actor": "tool",
-      "message": "Preparing draft output via \"draft_communication\" for human review (action 1).",
-      "created_at": "2026-08-11T05:59:01.646Z"
-    },
-    {
-      "id": 8,
-      "request_id": "3e0f1c81-90b6-48fe-8cdd-952db35d36e9",
-      "actor": "tool",
-      "message": "Draft prepared for action 1. Awaiting human approve/reject/edit.",
-      "created_at": "2026-08-11T05:59:01.647Z"
-    },
-    {
-      "id": 9,
-      "request_id": "3e0f1c81-90b6-48fe-8cdd-952db35d36e9",
+      "id": 66,
+      "request_id": "688a9092-1dc4-4f20-b8a4-c84c120f9316",
       "actor": "system",
-      "message": "Action 2 routed as \"execute_auto\": Generate a markdown brief of the discussion for internal records -- Internal-only document generation carries no external risk and needs no approval.",
-      "created_at": "2026-08-11T05:59:01.647Z"
+      "message": "Action 1 needs clarification before it can proceed: The specific content for the pilot scope is missing, and it's unclear who is responsible for creating it. The tool cannot generate content without input.",
+      "created_at": "2026-08-11T16:04:05.121Z"
     },
     {
-      "id": 10,
-      "request_id": "3e0f1c81-90b6-48fe-8cdd-952db35d36e9",
-      "actor": "tool",
-      "message": "Executing tool \"generate_markdown_brief\" automatically for action 2.",
-      "created_at": "2026-08-11T05:59:01.647Z"
-    },
-    {
-      "id": 11,
-      "request_id": "3e0f1c81-90b6-48fe-8cdd-952db35d36e9",
-      "actor": "tool",
-      "message": "Tool \"generate_markdown_brief\" succeeded for action 2.",
-      "created_at": "2026-08-11T05:59:01.648Z"
-    },
-    {
-      "id": 12,
-      "request_id": "3e0f1c81-90b6-48fe-8cdd-952db35d36e9",
+      "id": 67,
+      "request_id": "688a9092-1dc4-4f20-b8a4-c84c120f9316",
       "actor": "system",
-      "message": "Action 3 routed as \"execute_auto\": Set a reminder to follow up in 7 days if no response is received -- A simulated internal reminder is low-risk and fully specified (7 days).",
-      "created_at": "2026-08-11T05:59:01.648Z"
+      "message": "Action 2 routed as \"needs_clarification\": Thank Meridian Labs for their time -- The specific recipient at Meridian Labs is missing, which is required to draft communication.",
+      "created_at": "2026-08-11T16:04:05.121Z"
     },
     {
-      "id": 13,
-      "request_id": "3e0f1c81-90b6-48fe-8cdd-952db35d36e9",
-      "actor": "tool",
-      "message": "Executing tool \"simulate_reminder\" automatically for action 3.",
-      "created_at": "2026-08-11T05:59:01.648Z"
-    },
-    {
-      "id": 14,
-      "request_id": "3e0f1c81-90b6-48fe-8cdd-952db35d36e9",
-      "actor": "tool",
-      "message": "Tool \"simulate_reminder\" succeeded for action 3.",
-      "created_at": "2026-08-11T05:59:01.649Z"
-    },
-    {
-      "id": 15,
-      "request_id": "3e0f1c81-90b6-48fe-8cdd-952db35d36e9",
+      "id": 68,
+      "request_id": "688a9092-1dc4-4f20-b8a4-c84c120f9316",
       "actor": "system",
-      "message": "Pipeline finished. Status: awaiting_approval.",
-      "created_at": "2026-08-11T05:59:01.649Z"
+      "message": "Action 2 needs clarification before it can proceed: The specific recipient at Meridian Labs is missing, which is required to draft communication.",
+      "created_at": "2026-08-11T16:04:05.121Z"
+    },
+    {
+      "id": 69,
+      "request_id": "688a9092-1dc4-4f20-b8a4-c84c120f9316",
+      "actor": "system",
+      "message": "Action 3 routed as \"needs_clarification\": Propose next steps to Meridian Labs -- The specific next steps to propose are missing, and the recipient at Meridian Labs is also missing.",
+      "created_at": "2026-08-11T16:04:05.121Z"
+    },
+    {
+      "id": 70,
+      "request_id": "688a9092-1dc4-4f20-b8a4-c84c120f9316",
+      "actor": "system",
+      "message": "Action 3 needs clarification before it can proceed: The specific next steps to propose are missing, and the recipient at Meridian Labs is also missing.",
+      "created_at": "2026-08-11T16:04:05.121Z"
+    },
+    {
+      "id": 71,
+      "request_id": "688a9092-1dc4-4f20-b8a4-c84c120f9316",
+      "actor": "system",
+      "message": "Action 4 routed as \"execute_auto\": Follow up with Meridian Labs if no response within a week -- A simulated reminder can be scheduled automatically for 7 days from now to prompt a follow-up action, as explicitly identified in 'could_be_automated'.",
+      "created_at": "2026-08-11T16:04:05.121Z"
+    },
+    {
+      "id": 72,
+      "request_id": "688a9092-1dc4-4f20-b8a4-c84c120f9316",
+      "actor": "tool",
+      "message": "Executing tool \"simulate_reminder\" automatically for action 4.",
+      "created_at": "2026-08-11T16:04:05.121Z"
+    },
+    {
+      "id": 73,
+      "request_id": "688a9092-1dc4-4f20-b8a4-c84c120f9316",
+      "actor": "tool",
+      "message": "Tool \"simulate_reminder\" succeeded for action 4.",
+      "created_at": "2026-08-11T16:04:05.123Z"
+    },
+    {
+      "id": 74,
+      "request_id": "688a9092-1dc4-4f20-b8a4-c84c120f9316",
+      "actor": "system",
+      "message": "Pipeline finished. Status: completed_with_gaps.",
+      "created_at": "2026-08-11T16:04:05.123Z"
     }
   ]
 }

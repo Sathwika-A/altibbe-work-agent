@@ -59,6 +59,31 @@ State passed between steps is minimal and explicit: `rawText → interpretation 
 plan (JSON array) → per-action tool results`, all persisted to SQLite after each step so
 a crash mid-pipeline leaves an inspectable, honest record rather than silent loss.
 
+## Changelog
+
+- **Fixed: hardcoded model name (`gemini-2.5-flash`) returning HTTP 404.**
+  Google deprecated `gemini-2.5-flash` for new API users during development.
+  Switched the default to `gemini-flash-latest`, a Google-maintained alias
+  that always points at their current stable Flash model, so the app
+  survives Google's frequent model-naming churn without needing a code
+  change every time a specific model ID is retired. `GEMINI_MODEL` in `.env`
+  can still override this to pin an exact model if ever needed.
+- **Fixed: incorrect final status when all actions are blocked.** A reviewer
+  correctly flagged that Scenario 3 (all three actions routed to
+  `needs_clarification`) was still saving the parent request as `completed`.
+  Root cause: the final-status logic only checked whether any `human_review`
+  action was still pending — it never accounted for `needs_clarification`,
+  `cannot_execute`, or failed tool calls at all. Fixed by introducing a single
+  `computeFinalStatus()` function (`src/pipeline.js`) used by both the initial
+  pipeline run and the approval-resolution path, which now distinguishes:
+  `completed` (nothing blocked), `completed_with_gaps` (some actions blocked,
+  but at least one genuinely executed/was approved), and
+  `blocked_needs_clarification` (every action is blocked — nothing executed
+  or approved at all). Covered by an automated assertion in
+  `test/test-pipeline.js` (`assertFinalStatusCorrectness`) that fails loudly
+  if this regresses — verified by deliberately reintroducing the bug and
+  confirming the assertion catches it before restoring the fix.
+
 ## Setup
 
 ```bash
@@ -95,7 +120,10 @@ routed to `human_review` show **Approve / Reject / Edit** buttons.
 
 ```
 GEMINI_API_KEY=your_gemini_api_key_here
-GEMINI_MODEL=gemini-2.5-flash   # optional override
+GEMINI_MODEL=gemini-flash-latest   # optional override; this alias auto-tracks
+                                    # Google's current stable Flash model, so it
+                                    # keeps working across their frequent model
+                                    # naming/deprecation cycles without code changes
 PORT=3000                        # optional override
 ```
 

@@ -81,6 +81,8 @@ button.edit { background: var(--amber); color: #1a1200; }
 .badge.interpreted, .badge.planned { background: #3a3f4b; }
 .badge.awaiting_approval { background: var(--amber); color: #1a1200; }
 .badge.completed { background: var(--green); color: #06301c; }
+.badge.completed_with_gaps { background: #6b5bff; color: white; }
+.badge.blocked_needs_clarification { background: var(--red); color: white; }
 .badge.failed { background: var(--red); color: #300; }
 
 .route-badge { font-size: 11px; padding: 2px 8px; border-radius: 10px; margin-left: 6px; }

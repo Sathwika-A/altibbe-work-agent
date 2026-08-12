@@ -38,6 +38,45 @@ function updateAction(actionId, fields) {
   db.prepare(`UPDATE actions SET ${sets}, updated_at = ? WHERE id = ?`).run(...values, nowISO(), actionId);
 }
 
+/**
+ * Computes the correct request-level status from the actual state of its
+ * actions. This is the single source of truth for status -- both the initial
+ * pipeline run and resolveAction() call this instead of each hand-rolling
+ * their own (previously inconsistent) logic.
+ *
+ * Rules:
+ *  - Any human_review action still 'pending'          -> awaiting_approval
+ *  - No actions blocked, everything auto/approved      -> completed
+ *  - Some actions blocked (needs_clarification /
+ *    cannot_execute / a failed tool call), but at least
+ *    one action genuinely executed or was approved     -> completed_with_gaps
+ *  - Every single action is blocked (nothing executed
+ *    and nothing approved at all)                       -> blocked_needs_clarification
+ */
+function computeFinalStatus(requestId) {
+  const actions = db.prepare('SELECT * FROM actions WHERE request_id = ?').all(requestId);
+  if (actions.length === 0) return 'completed'; // no actions in the plan at all -- nothing to block on
+
+  const anyPendingApproval = actions.some(a => a.approval_status === 'pending');
+  if (anyPendingApproval) return 'awaiting_approval';
+
+  const isBlocked = (a) =>
+    a.route === 'needs_clarification' ||
+    a.route === 'cannot_execute' ||
+    !!a.error; // an execute_auto or human_review action whose tool call failed
+
+  const isResolvedWork = (a) =>
+    (a.route === 'execute_auto' && !a.error) ||
+    (a.route === 'human_review' && ['approved', 'edited'].includes(a.approval_status));
+
+  const anyBlocked = actions.some(isBlocked);
+  const anyResolvedWork = actions.some(isResolvedWork);
+
+  if (!anyBlocked) return 'completed';
+  if (anyBlocked && anyResolvedWork) return 'completed_with_gaps';
+  return 'blocked_needs_clarification';
+}
+
 async function runToolForAction(requestId, action) {
   const toolFn = TOOLS[action.tool_name];
   if (!toolFn || action.tool_name === 'none') {
@@ -106,7 +145,6 @@ async function processNewRequest(rawText) {
   }
 
   // ---- Step 3: Execute plan (route-aware) ----
-  let anyPending = false;
   let seq = 0;
   for (const item of planItems) {
     seq += 1;
@@ -143,7 +181,6 @@ async function processNewRequest(rawText) {
         updateAction(actionId, { error: result.error, approval_status: 'n/a' });
         log(requestId, 'tool', `Could not prepare draft for action ${seq}: ${result.error}`);
       }
-      anyPending = true;
     } else if (item.route === 'cannot_execute') {
       log(requestId, 'system', `Action ${seq} cannot be executed with available tools: ${item.reason}`);
     } else if (item.route === 'needs_clarification') {
@@ -151,7 +188,7 @@ async function processNewRequest(rawText) {
     }
   }
 
-  const finalStatus = anyPending ? 'awaiting_approval' : 'completed';
+  const finalStatus = computeFinalStatus(requestId);
   saveRequest(requestId, { status: finalStatus });
   log(requestId, 'system', `Pipeline finished. Status: ${finalStatus}.`);
 
@@ -188,17 +225,18 @@ function resolveAction(actionId, decision, editedOutput) {
     log(requestId, 'user', `Action ${action.seq} edited and approved by human.`);
   }
 
-  // Recompute the parent request's status once all human_review actions are resolved.
-  const remainingPending = db.prepare(
-    `SELECT COUNT(*) as c FROM actions WHERE request_id = ? AND approval_status = 'pending'`
-  ).get(requestId).c;
-
-  if (remainingPending === 0) {
-    saveRequest(requestId, { status: 'completed' });
-    log(requestId, 'system', 'All actions resolved. Request marked completed.');
+  // Recompute the parent request's status from actual action state once this
+  // approval is resolved -- reuses the same logic as the initial pipeline run
+  // so both paths agree (previously this always hardcoded 'completed', which
+  // was wrong whenever needs_clarification/cannot_execute actions existed
+  // alongside the approved one).
+  const newStatus = computeFinalStatus(requestId);
+  if (newStatus !== 'awaiting_approval') {
+    saveRequest(requestId, { status: newStatus });
+    log(requestId, 'system', `All pending approvals resolved. Request status: ${newStatus}.`);
   }
 
   return { ok: true };
 }
 
-module.exports = { processNewRequest, resolveAction };
+module.exports = { processNewRequest, resolveAction, computeFinalStatus };

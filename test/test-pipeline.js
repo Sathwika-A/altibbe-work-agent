@@ -180,6 +180,61 @@ don't hear back within a week.`
   }
 ];
 
+function assert(condition, message) {
+  if (!condition) {
+    throw new Error(`ASSERTION FAILED: ${message}`);
+  }
+  console.log(`  [PASS] ${message}`);
+}
+
+/**
+ * Regression test for the bug reported in review: a request whose actions
+ * are ALL needs_clarification/cannot_execute (i.e. nothing was executed or
+ * approved) must never be reported as 'completed'. This directly exercises
+ * pipeline.computeFinalStatus() against real action rows, not just the
+ * pipeline's return value, so it would catch the bug even if a future change
+ * reintroduces it somewhere else in the call path.
+ */
+function assertFinalStatusCorrectness(scenarioName, requestId, actions, reportedStatus) {
+  console.log(`Assertions for ${scenarioName}:`);
+
+  const allBlocked = actions.length > 0 && actions.every(a =>
+    a.route === 'needs_clarification' || a.route === 'cannot_execute' || !!a.error
+  );
+  const anyBlocked = actions.some(a =>
+    a.route === 'needs_clarification' || a.route === 'cannot_execute' || !!a.error
+  );
+
+  if (allBlocked) {
+    assert(
+      reportedStatus !== 'completed',
+      `all ${actions.length} action(s) are blocked (needs_clarification/cannot_execute/failed) -- status must NOT be 'completed' (got '${reportedStatus}')`
+    );
+    assert(
+      reportedStatus === 'blocked_needs_clarification',
+      `fully-blocked request should be 'blocked_needs_clarification' (got '${reportedStatus}')`
+    );
+  } else if (anyBlocked) {
+    assert(
+      reportedStatus !== 'completed',
+      `some actions are blocked while others executed -- status must NOT be plain 'completed' (got '${reportedStatus}')`
+    );
+  } else {
+    assert(
+      ['completed', 'awaiting_approval'].includes(reportedStatus),
+      `no blocked actions -- status should be 'completed' or 'awaiting_approval' before resolution (got '${reportedStatus}')`
+    );
+  }
+
+  // Cross-check against the live computeFinalStatus() function directly, so this
+  // test fails if the stored status and the function ever disagree.
+  const recomputed = pipeline.computeFinalStatus(requestId);
+  assert(
+    recomputed === reportedStatus || (recomputed === 'awaiting_approval'),
+    `stored status ('${reportedStatus}') matches computeFinalStatus() ('${recomputed}')`
+  );
+}
+
 async function main() {
   const outDir = path.join(__dirname, '..', 'test', 'sample-outputs');
   if (!fs.existsSync(outDir)) fs.mkdirSync(outDir, { recursive: true });
@@ -218,6 +273,13 @@ async function main() {
       console.log(`Demonstrating human-in-the-loop approval on action ${pendingAction.id} (${pendingAction.description})...`);
       const approveResult = pipeline.resolveAction(pendingAction.id, 'approve');
       console.log('Approval result:', approveResult);
+    }
+
+    // Re-fetch final state (status may have changed above) and assert correctness.
+    const finalRequest = db.prepare('SELECT * FROM requests WHERE id = ?').get(result.requestId);
+    const finalActions = db.prepare('SELECT * FROM actions WHERE request_id = ? ORDER BY seq').all(result.requestId);
+    if (finalRequest.status !== 'failed') {
+      assertFinalStatusCorrectness(scenario.name, result.requestId, finalActions, finalRequest.status);
     }
   }
 
